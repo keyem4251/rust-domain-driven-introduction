@@ -22,7 +22,7 @@ fn fn_2_1() {
     let full_name = FullName::new("first".to_string(), "last".to_string());
     println!("{} {}", full_name.first_name, full_name.last_name);
 
-    // PartialEqで値が等価な場合にtrueを返す
+    // PartialEqで値が等価な場合にtrueを返し、インスタンスではなく値として扱う
     let full_name2 = FullName::new("first".to_string(), "last".to_string());
     println!("{}", full_name == full_name2);
 }
