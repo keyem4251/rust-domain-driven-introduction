@@ -44,7 +44,22 @@ fn fn_2_2() {
             }
             panic!("許可されていないモイjが使われています");
         }
-
-
     }
+
+    #[derive(PartialEq)]
+    struct FullName {
+        first_name: Name,
+        last_name: Name,
+    }
+
+    impl FullName {
+        fn new(first_name: Name, last_name: Name) -> Self {
+            FullName { first_name, last_name }
+        }
+    }
+
+    let first_name = Name::new("first".to_string());
+    let last_name = Name::new("last".to_string());
+    let full_name = FullName::new(first_name, last_name);
+    println!("{} {}", full_name.first_name.value, full_name.last_name.value);
 }
