@@ -1,5 +1,8 @@
+use regex::Regex;
+
 fn main() {
     fn_2_1();
+    fn_2_2();
 }
 
 fn fn_2_1() {
@@ -25,4 +28,23 @@ fn fn_2_1() {
     // PartialEqで値が等価な場合にtrueを返し、インスタンスではなく値として扱う
     let full_name2 = FullName::new("first".to_string(), "last".to_string());
     println!("{}", full_name == full_name2);
+}
+
+fn fn_2_2() {
+    #[derive(PartialEq)]
+    struct Name {
+        value: String,
+    }
+
+    impl Name {
+        fn new(value: String) -> Self {
+            let regex = Regex::new("[a-zA-Z]").unwrap();
+            if regex.is_match(&value) {
+                return Name { value };                
+            }
+            panic!("許可されていないモイjが使われています");
+        }
+
+
+    }
 }
