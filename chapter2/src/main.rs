@@ -31,7 +31,7 @@ fn fn_2_1() {
 }
 
 fn fn_2_2() {
-    #[derive(PartialEq)]
+    #[derive(PartialEq, Debug)]
     struct Name {
         value: String,
     }
@@ -46,7 +46,7 @@ fn fn_2_2() {
         }
     }
 
-    #[derive(PartialEq)]
+    #[derive(PartialEq, Debug)]
     struct FullName {
         first_name: Name,
         last_name: Name,
@@ -61,5 +61,5 @@ fn fn_2_2() {
     let first_name = Name::new("first".to_string());
     let last_name = Name::new("last".to_string());
     let full_name = FullName::new(first_name, last_name);
-    println!("{} {}", full_name.first_name.value, full_name.last_name.value);
+    println!("{:?} {:?}", full_name.first_name, full_name.last_name);
 }
