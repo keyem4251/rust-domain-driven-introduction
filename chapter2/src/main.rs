@@ -93,7 +93,7 @@ fn fn_2_3() {
     let my_money = Money::new(dec!(1000), "JPY".to_string());
     let allowance = Money::new(dec!(3000), "JPY".to_string());
     let result = my_money.add(allowance);
-    print!("{:?}", result);
+    println!("{:?}", result);
 }
 
 fn fn_2_4() {
@@ -127,5 +127,5 @@ fn fn_2_4() {
     let my_money = Money::new(dec!(1000), "JPY".to_string());
     let allowance = Money::new(dec!(3000), "JPY".to_string());
     let result = my_money + allowance;
-    print!("{:?}", result);
+    println!("{:?}", result);
 }
