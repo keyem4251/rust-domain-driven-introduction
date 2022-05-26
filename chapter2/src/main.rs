@@ -1,8 +1,11 @@
 use regex::Regex;
+use rust_decimal::Decimal;
+use rust_decimal_macros::dec;
 
 fn main() {
     fn_2_1();
     fn_2_2();
+    fn_2_3();
 }
 
 fn fn_2_1() {
@@ -62,4 +65,30 @@ fn fn_2_2() {
     let last_name = Name::new("last".to_string());
     let full_name = FullName::new(first_name, last_name);
     println!("{:?} {:?}", full_name.first_name, full_name.last_name);
+}
+
+fn fn_2_3() {
+    #[derive(PartialEq, Debug)]
+    struct Money {
+        amount: Decimal,
+        currency: String,
+    }
+
+    impl Money {
+        fn new(amount: Decimal, currency: String) -> Self {
+            Money { amount, currency }
+        }
+
+        fn add(&self, money: Money) -> Money {
+            if self.currency != money.currency {
+                panic!("通貨単位が異なります this: {}, arg: {}", self.currency, money.currency);
+            }
+            Money::new(money.amount, money.currency)
+        }
+    }
+
+    let my_money = Money::new(dec!(1000), "JPY".to_string());
+    let allowance = Money::new(dec!(3000), "JPY".to_string());
+    let result = my_money.add(allowance);
+    print!("{:?}", result);
 }
