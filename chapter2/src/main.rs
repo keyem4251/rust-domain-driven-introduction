@@ -1,11 +1,13 @@
 use regex::Regex;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
+use std::ops::Add;
 
 fn main() {
     fn_2_1();
     fn_2_2();
     fn_2_3();
+    fn_2_4();
 }
 
 fn fn_2_1() {
@@ -68,6 +70,7 @@ fn fn_2_2() {
 }
 
 fn fn_2_3() {
+    // ふるまいをもった値オブジェクト
     #[derive(PartialEq, Debug)]
     struct Money {
         amount: Decimal,
@@ -90,5 +93,39 @@ fn fn_2_3() {
     let my_money = Money::new(dec!(1000), "JPY".to_string());
     let allowance = Money::new(dec!(3000), "JPY".to_string());
     let result = my_money.add(allowance);
+    print!("{:?}", result);
+}
+
+fn fn_2_4() {
+    // ふるまいをもった値オブジェクト（Addトレイト）
+    #[derive(PartialEq, Debug)]
+    struct Money {
+        amount: Decimal,
+        currency: String,
+    }
+
+    impl Money {
+        fn new(amount: Decimal, currency: String) -> Self {
+            Money { amount, currency }
+        }
+    }
+
+    impl Add for Money {
+        type Output = Self;
+
+        fn add(self, rhs: Self) -> Self::Output {
+            if self.currency != rhs.currency {
+                panic!("通貨単位が異なります lhs: {}, rhs: {}", self.currency, rhs.currency);
+            }
+            Self {
+                amount: self.amount + rhs.amount,
+                currency: self.currency,
+            }
+        }
+    }
+
+    let my_money = Money::new(dec!(1000), "JPY".to_string());
+    let allowance = Money::new(dec!(3000), "JPY".to_string());
+    let result = my_money + allowance;
     print!("{:?}", result);
 }
