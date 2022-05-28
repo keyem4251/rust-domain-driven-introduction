@@ -166,4 +166,21 @@ fn fn_2_5() {
 
     let model_number = ModelNumber::new("111".to_string(), "019".to_string(), "193".to_string());
     println!("{}", model_number);
+
+    #[derive(Debug)]
+    struct UserName {
+        value: String,
+    }
+
+    impl UserName {
+        fn new(value: String) -> Self {
+            if value.len() < 3 {
+                panic!("ユーザー名は3文字以上です");
+            }
+            UserName { value }
+        }
+    }
+
+    let user_name = UserName::new("test".to_string());
+    println!("{:?}", user_name.value);
 }
