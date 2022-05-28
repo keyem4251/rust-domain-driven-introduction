@@ -47,7 +47,7 @@ fn fn_2_2() {
         fn new(value: String) -> Self {
             let regex = Regex::new("[a-zA-Z]").unwrap();
             if regex.is_match(&value) {
-                return Name { value };                
+                return Name { value };
             }
             panic!("許可されていないモイjが使われています");
         }
@@ -61,7 +61,10 @@ fn fn_2_2() {
 
     impl FullName {
         fn new(first_name: Name, last_name: Name) -> Self {
-            FullName { first_name, last_name }
+            FullName {
+                first_name,
+                last_name,
+            }
         }
     }
 
@@ -86,7 +89,10 @@ fn fn_2_3() {
 
         fn add(&self, money: Money) -> Money {
             if self.currency != money.currency {
-                panic!("通貨単位が異なります this: {}, arg: {}", self.currency, money.currency);
+                panic!(
+                    "通貨単位が異なります this: {}, arg: {}",
+                    self.currency, money.currency
+                );
             }
             Money::new(money.amount, money.currency)
         }
@@ -117,7 +123,10 @@ fn fn_2_4() {
 
         fn add(self, rhs: Self) -> Self::Output {
             if self.currency != rhs.currency {
-                panic!("通貨単位が異なります lhs: {}, rhs: {}", self.currency, rhs.currency);
+                panic!(
+                    "通貨単位が異なります lhs: {}, rhs: {}",
+                    self.currency, rhs.currency
+                );
             }
             Self {
                 amount: self.amount + rhs.amount,
@@ -141,7 +150,11 @@ fn fn_2_5() {
 
     impl ModelNumber {
         fn new(product_code: String, branch: String, lot: String) -> Self {
-            ModelNumber { product_code, branch, lot }
+            ModelNumber {
+                product_code,
+                branch,
+                lot,
+            }
         }
     }
 
