@@ -1,6 +1,7 @@
 use regex::Regex;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
+use std::fmt;
 use std::ops::Add;
 
 fn main() {
@@ -8,6 +9,7 @@ fn main() {
     fn_2_2();
     fn_2_3();
     fn_2_4();
+    fn_2_5();
 }
 
 fn fn_2_1() {
@@ -128,4 +130,27 @@ fn fn_2_4() {
     let allowance = Money::new(dec!(3000), "JPY".to_string());
     let result = my_money + allowance;
     println!("{:?}", result);
+}
+
+fn fn_2_5() {
+    struct ModelNumber {
+        product_code: String,
+        branch: String,
+        lot: String,
+    }
+
+    impl ModelNumber {
+        fn new(product_code: String, branch: String, lot: String) -> Self {
+            ModelNumber { product_code, branch, lot }
+        }
+    }
+
+    impl fmt::Display for ModelNumber {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            write!(f, "{}-{}-{}", self.product_code, self.branch, self.lot)
+        }
+    }
+
+    let model_number = ModelNumber::new("111".to_string(), "019".to_string(), "193".to_string());
+    println!("{}", model_number);
 }
