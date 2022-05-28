@@ -183,4 +183,29 @@ fn fn_2_5() {
 
     let user_name = UserName::new("test".to_string());
     println!("{:?}", user_name.value);
+
+    struct UserId {
+        value: String,
+    }
+
+    impl UserId {
+        fn new(value: String) -> Self {
+            UserId { value }
+        }
+    }
+
+    struct User {
+        user_name: UserName,
+        user_id: UserId,
+    }
+
+    impl User {
+        fn new(user_name: UserName, user_id: UserId) -> Self {
+            User { user_name, user_id }
+        }
+    }
+
+    let user_id = UserId::new("011".to_string());
+    let user = User::new(user_name, user_id);
+    println!("{} {}", user.user_name.value, user.user_id.value);
 }
