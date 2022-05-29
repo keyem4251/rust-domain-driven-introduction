@@ -64,6 +64,14 @@ fn fn_3_2() {
         }
     }
 
+    fn check(lhs: &User, rhs: &User) {
+        if  lhs == rhs {
+            println!("同一のユーザです")
+        } else {
+            println!("別のユーザです")
+        }
+    }
+
     let user_id = UserId::new("011".to_string());
     let mut user = User::new(user_id, "test".to_string());
     user.change_name("test2".to_string());
@@ -71,9 +79,9 @@ fn fn_3_2() {
     let user_id_2 = UserId::new("012".to_string());
     let user_2 = User::new(user_id_2, "test".to_string());
 
-    println!("{:?}", user == user_2);
+    check(&user, &user_2);
 
     let user_id_3 = UserId::new("011".to_string());
     let user_3 = User::new(user_id_3, "test".to_string());
-    println!("{:?}", user == user_3);
+    check(&user, &user_3);
 }
