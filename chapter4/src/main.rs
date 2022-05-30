@@ -1,5 +1,6 @@
 fn main() {
     fn_4_1();
+    fn_4_2();
 }
 
 fn fn_4_1() {
@@ -55,4 +56,58 @@ fn fn_4_1() {
     let user_service = UserService::new();
     println!("{:?}", user.name);
     println!("{}", user_service.exists(&user));
+}
+
+fn fn_4_2() {
+    #[derive(Debug)]
+    struct Baggage {
+        value: String,
+    }
+
+    impl Baggage {
+        fn new(value: String) -> Self {
+            Baggage { value }
+        }
+    }
+
+    #[derive(Debug)]
+    struct PhysicalDistributionBase {
+        name: String,
+    }
+
+    impl PhysicalDistributionBase {
+        fn new(name: String) -> Self {
+            PhysicalDistributionBase { name }
+        }
+
+        fn ship(&self, baggage: Baggage) -> Baggage {
+            println!("{:?} {:?}", self.name, baggage.value);
+            baggage
+        }
+
+        fn receive(&self, baggage: Baggage) {
+            println!("{:?} {:?}", self.name, baggage.value);
+        } 
+    }
+
+    struct TransportService {}
+
+    impl TransportService {
+        fn new() -> Self {
+            TransportService {}
+        }
+
+        fn transport(&self, from: &PhysicalDistributionBase, to: &PhysicalDistributionBase, baggage: Baggage) {
+            let shipped_baggage = from.ship(baggage);
+            to.receive(shipped_baggage);
+        }
+    }
+
+    let baggage1 = Baggage::new("baggage1".to_string());
+    
+    let from = PhysicalDistributionBase::new("base1".to_string());
+    let to = PhysicalDistributionBase::new("base2".to_string());
+
+    let transport_service = TransportService::new();
+    transport_service.transport(&from, &to, baggage1);
 }
