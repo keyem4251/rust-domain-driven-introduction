@@ -1,5 +1,5 @@
 fn main() {
-    println!("Hello, world!");
+    fn_5_1();
 }
 
 fn fn_5_1() {
@@ -23,12 +23,12 @@ fn fn_5_1() {
         }
     }
 
-    struct UserService {
-        user_repository: Box<dyn UserRepository>,
+    struct UserService<Repo: UserRepository> {
+        user_repository: Repo,
     }
 
-    impl UserService {
-        fn new(user_repository: Box<dyn UserRepository>) -> Self {
+    impl<Repo> UserService<Repo> where Repo: UserRepository {
+        fn new(user_repository: Repo) -> Self {
             UserService { user_repository }
         }
 
@@ -41,8 +41,24 @@ fn fn_5_1() {
         }
     }
 
-    trait UserRepository {
+    trait UserRepository: Copy {
         fn save(&self, user: User);
         fn find(&self, name: UserName) -> Option<User>;
+    }
+
+    struct Program<Repo: UserRepository> {
+        user_repository: Repo,
+    }
+
+    impl<Repo> Program<Repo> where Repo: UserRepository {
+        fn new(user_repository: Repo) -> Self {
+            Program { user_repository }
+        }
+
+        fn create_user(&self, user_name: String) {
+            let user = User::new(UserName::new(user_name));
+
+            let user_service = UserService::new(self.user_repository);
+        }
     }
 }
