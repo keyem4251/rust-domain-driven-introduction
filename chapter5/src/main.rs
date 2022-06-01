@@ -48,6 +48,8 @@ fn fn_5_1() {
         fn find(&self, name: UserName) -> Option<User>;
         // 永続化と再構築に関する振る舞いを定義するので、Update系はRepositoryには定義しない
         // 削除（Delete）はRepository
+        // ORMを使った場合でもORMのEntityをそのまま返すのではなくあくまでドメインモデル（User）を返す
+        // ORMのEntity → ドメインモデルはDTOなどを使う
     }
 
     #[derive(Clone, Copy)]
