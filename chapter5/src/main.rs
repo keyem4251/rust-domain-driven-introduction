@@ -46,6 +46,8 @@ fn fn_5_1() {
     trait UserRepository: Copy {
         fn save(&self, user: User);
         fn find(&self, name: UserName) -> Option<User>;
+        // 永続化と再構築に関する振る舞いを定義するので、Update系はRepositoryには定義しない
+        // 削除（Delete）はRepository
     }
 
     #[derive(Clone, Copy)]
