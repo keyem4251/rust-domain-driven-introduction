@@ -57,7 +57,7 @@ fn fn_5_1() {
         }
 
         fn find(&self, name: UserName) -> Option<User> {
-            let rows = User::new(name);
+            let rows = User::new(name); // 本来はデータベースで検索
             if rows.name.value == "user" {
                 return Some(rows);
             }
@@ -94,4 +94,31 @@ fn fn_5_1() {
     let user_repository = UserRepositoryImpl::new();
     let program = Program::new(user_repository);
     program.create_user("user name".to_string());
+
+    #[derive(Clone, Copy)]
+    struct InMemoryUserRepository {}
+
+    impl UserRepository for InMemoryUserRepository {
+        fn save(&self, user: User) {
+            println!("inmemory save user: {:?}", user);   
+        }
+
+        fn find(&self, name: UserName) -> Option<User> {
+            let rows = User::new(name); // テスト用にインメモリで検索
+            if rows.name.value == "user" {
+                return Some(rows);
+            }
+            None
+        }
+    }
+
+    impl InMemoryUserRepository {
+        fn new() -> Self {
+            InMemoryUserRepository {}
+        }
+    }
+
+    let inmemory_user_repository = InMemoryUserRepository::new();
+    let test_program = Program::new(inmemory_user_repository);
+    test_program.create_user("test user name".to_string());
 }
