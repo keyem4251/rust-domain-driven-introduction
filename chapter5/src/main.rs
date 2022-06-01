@@ -3,6 +3,7 @@ fn main() {
 }
 
 fn fn_5_1() {
+    #[derive(Clone, Debug)]
     struct UserName {
         value: String,
     }
@@ -13,6 +14,7 @@ fn fn_5_1() {
         }
     }
 
+    #[derive(Clone, Debug)]
     struct User {
         name: UserName,
     }
@@ -46,6 +48,29 @@ fn fn_5_1() {
         fn find(&self, name: UserName) -> Option<User>;
     }
 
+    #[derive(Clone, Copy)]
+    struct UserRepositoryImpl {}
+
+    impl UserRepository for UserRepositoryImpl {
+        fn save(&self, user: User) {
+            println!("save user: {:?}", user);
+        }
+
+        fn find(&self, name: UserName) -> Option<User> {
+            let rows = User::new(name);
+            if rows.name.value == "user" {
+                return Some(rows);
+            }
+            None
+        }
+    }
+
+    impl UserRepositoryImpl {
+        fn new() -> Self {
+            UserRepositoryImpl {}
+        }
+    }
+
     struct Program<Repo: UserRepository> {
         user_repository: Repo,
     }
@@ -59,6 +84,14 @@ fn fn_5_1() {
             let user = User::new(UserName::new(user_name));
 
             let user_service = UserService::new(self.user_repository);
+            if user_service.exists(user.clone()) {
+                println!("ユーザーはすでに作成されています");
+            }
+            self.user_repository.save(user);
         }
     }
+
+    let user_repository = UserRepositoryImpl::new();
+    let program = Program::new(user_repository);
+    program.create_user("user name".to_string());
 }
