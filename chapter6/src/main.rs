@@ -233,7 +233,7 @@ fn fn_6_2() {
             let found = self.user_repository.find(name.clone());
             match found {
                 Some(mut user) => {
-                    user.change_name(name);
+                    user.change_name(name); // nameがnullかを確認してnullでない場合にchange_nameする
                     let user_service = UserService::new(self.user_repository);
                     if user_service.exists(user.clone()) {
                         println!("ユーザーはすでに作成されています");
