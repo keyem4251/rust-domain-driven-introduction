@@ -224,7 +224,12 @@ fn fn_6_2() {
         }
 
         fn update(&self, command: UserUpdateCommand) {
-            let name = UserName::new(command.name);
+            // 更新対象が名前か確認
+            let name = match command.name {
+                Some(name) => UserName::new(name),
+                None => panic!("名前ではない"),
+            };
+
             let found = self.user_repository.find(name.clone());
             match found {
                 Some(mut user) => {
@@ -258,12 +263,17 @@ fn fn_6_2() {
 
     #[derive(Clone)]
     struct UserUpdateCommand {
-        name: String,
+        name: Option<String>,
     }
 
     impl UserUpdateCommand {
         fn new(name: String) -> Self {
-            UserUpdateCommand { name }
+            let target_name = if name == "test".to_string() {
+                None
+            } else {
+                Some(name)
+            };
+            UserUpdateCommand { name: target_name }
         }
     }
 
