@@ -1,5 +1,5 @@
 fn main() {
-    println!("Hello, world!");
+    fn_6_1();
 }
 
 fn fn_6_1() {
@@ -89,9 +89,20 @@ fn fn_6_1() {
             }
             self.user_repository.save(user);
         }
+
+        fn get(&self, user_name: String) -> User {
+            let target_name = UserName::new(user_name);
+            let user = self.user_repository.find(target_name);
+            match user {
+                Some(user) => user,
+                None => panic!("ユーザーが存在しません"),
+            }
+        }
     }
 
     let user_repository = UserRepositoryImpl::new();
-    let aplication_service = UserApplicationService::new(user_repository);
-    aplication_service.register("user name".to_string());
+    let application_service = UserApplicationService::new(user_repository);
+    application_service.register("user name".to_string());
+    let user = application_service.get("user name".to_string());
+    println!("{:?}", user);
 }
