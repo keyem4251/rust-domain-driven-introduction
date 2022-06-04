@@ -137,6 +137,10 @@ fn fn_6_2() {
         fn new(name: UserName) -> Self {
             User { name }
         }
+
+        fn change_name(&mut self, name: UserName) {
+            self.name = name;
+        }
     }
 
     struct UserService<Repo: UserRepository> {
@@ -218,6 +222,22 @@ fn fn_6_2() {
                 None => panic!("ユーザーが存在しません"),
             }
         }
+
+        fn update(&self, command: UserUpdateCommand) {
+            let name = UserName::new(command.name);
+            let found = self.user_repository.find(name.clone());
+            match found {
+                Some(mut user) => {
+                    user.change_name(name);
+                    let user_service = UserService::new(self.user_repository);
+                    if user_service.exists(user.clone()) {
+                        println!("ユーザーはすでに作成されています");
+                    }
+                    self.user_repository.save(user);
+                },
+                None => panic!("ユーザーが存在しません"),
+            }
+        }
     }
 
     struct UserData {
@@ -235,4 +255,18 @@ fn fn_6_2() {
     application_service.register("user name".to_string());
     let user_data = application_service.get("user".to_string());
     println!("{:?}", user_data.name);
+
+    #[derive(Clone)]
+    struct UserUpdateCommand {
+        name: String,
+    }
+
+    impl UserUpdateCommand {
+        fn new(name: String) -> Self {
+            UserUpdateCommand { name }
+        }
+    }
+
+    let command = UserUpdateCommand::new("test".to_string());
+    application_service.update(command);
 }
