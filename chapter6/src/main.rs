@@ -80,7 +80,7 @@ fn fn_6_1() {
             UserApplicationService { user_repository }
         }
 
-        fn create_user(&self, user_name: String) {
+        fn register(&self, user_name: String) {
             let user = User::new(UserName::new(user_name));
 
             let user_service = UserService::new(self.user_repository);
@@ -93,5 +93,5 @@ fn fn_6_1() {
 
     let user_repository = UserRepositoryImpl::new();
     let aplication_service = UserApplicationService::new(user_repository);
-    aplication_service.create_user("user name".to_string());
+    aplication_service.register("user name".to_string());
 }
