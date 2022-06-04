@@ -214,7 +214,7 @@ fn fn_6_2() {
             let target_name = UserName::new(user_name);
             let user = self.user_repository.find(target_name);
             match user {
-                Some(user) => UserData::new(user.name.value),
+                Some(user) => UserData::new(&user),
                 None => panic!("ユーザーが存在しません"),
             }
         }
@@ -225,8 +225,8 @@ fn fn_6_2() {
     }
 
     impl UserData {
-        fn new(name: String) -> Self {
-            UserData { name }
+        fn new(user: &User) -> Self {
+            UserData { name: user.name.clone().value }
         }
     }
 
