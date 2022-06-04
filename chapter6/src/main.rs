@@ -29,7 +29,10 @@ fn fn_6_1() {
         user_repository: Repo,
     }
 
-    impl<Repo> UserService<Repo> where Repo: UserRepository {
+    impl<Repo> UserService<Repo>
+    where
+        Repo: UserRepository,
+    {
         fn new(user_repository: Repo) -> Self {
             UserService { user_repository }
         }
@@ -75,7 +78,10 @@ fn fn_6_1() {
         user_repository: Repo,
     }
 
-    impl<Repo> UserApplicationService<Repo> where Repo: UserRepository {
+    impl<Repo> UserApplicationService<Repo>
+    where
+        Repo: UserRepository,
+    {
         fn new(user_repository: Repo) -> Self {
             UserApplicationService { user_repository }
         }
