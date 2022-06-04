@@ -103,6 +103,6 @@ fn fn_6_1() {
     let user_repository = UserRepositoryImpl::new();
     let application_service = UserApplicationService::new(user_repository);
     application_service.register("user name".to_string());
-    let user = application_service.get("user name".to_string());
+    let user = application_service.get("user".to_string());
     println!("{:?}", user);
 }
