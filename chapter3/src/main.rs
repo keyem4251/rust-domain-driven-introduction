@@ -65,7 +65,7 @@ fn fn_3_2() {
     }
 
     fn check(lhs: &User, rhs: &User) {
-        if  lhs == rhs {
+        if lhs == rhs {
             println!("同一のユーザです")
         } else {
             println!("別のユーザです")
