@@ -29,7 +29,10 @@ fn fn_5_1() {
         user_repository: Repo,
     }
 
-    impl<Repo> UserService<Repo> where Repo: UserRepository {
+    impl<Repo> UserService<Repo>
+    where
+        Repo: UserRepository,
+    {
         fn new(user_repository: Repo) -> Self {
             UserService { user_repository }
         }
@@ -79,7 +82,10 @@ fn fn_5_1() {
         user_repository: Repo,
     }
 
-    impl<Repo> Program<Repo> where Repo: UserRepository {
+    impl<Repo> Program<Repo>
+    where
+        Repo: UserRepository,
+    {
         fn new(user_repository: Repo) -> Self {
             Program { user_repository }
         }
@@ -104,7 +110,7 @@ fn fn_5_1() {
 
     impl UserRepository for InMemoryUserRepository {
         fn save(&self, user: User) {
-            println!("inmemory save user: {:?}", user);   
+            println!("inmemory save user: {:?}", user);
         }
 
         fn find(&self, name: UserName) -> Option<User> {

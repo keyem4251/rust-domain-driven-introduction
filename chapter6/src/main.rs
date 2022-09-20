@@ -239,7 +239,7 @@ fn fn_6_2() {
                         println!("ユーザーはすでに作成されています");
                     }
                     self.user_repository.save(user);
-                },
+                }
                 None => panic!("ユーザーが存在しません"),
             }
         }
@@ -251,7 +251,9 @@ fn fn_6_2() {
 
     impl UserData {
         fn new(user: &User) -> Self {
-            UserData { name: user.name.clone().value }
+            UserData {
+                name: user.name.clone().value,
+            }
         }
     }
 

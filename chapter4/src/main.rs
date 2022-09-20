@@ -87,7 +87,7 @@ fn fn_4_2() {
 
         fn receive(&self, baggage: Baggage) {
             println!("{:?} {:?}", self.name, baggage.value);
-        } 
+        }
     }
 
     struct TransportService {}
@@ -97,14 +97,19 @@ fn fn_4_2() {
             TransportService {}
         }
 
-        fn transport(&self, from: &PhysicalDistributionBase, to: &PhysicalDistributionBase, baggage: Baggage) {
+        fn transport(
+            &self,
+            from: &PhysicalDistributionBase,
+            to: &PhysicalDistributionBase,
+            baggage: Baggage,
+        ) {
             let shipped_baggage = from.ship(baggage);
             to.receive(shipped_baggage);
         }
     }
 
     let baggage1 = Baggage::new("baggage1".to_string());
-    
+
     let from = PhysicalDistributionBase::new("base1".to_string());
     let to = PhysicalDistributionBase::new("base2".to_string());
 
